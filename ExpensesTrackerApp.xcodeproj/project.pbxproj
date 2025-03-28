@@ -6,6 +6,16 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A0669DB82D794A5D00E1D532 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = A0669DB72D794A5D00E1D532 /* FirebaseAuth */; };
+		A0669DBA2D794A5D00E1D532 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = A0669DB92D794A5D00E1D532 /* FirebaseCore */; };
+		A0669DBC2D794A5D00E1D532 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = A0669DBB2D794A5D00E1D532 /* FirebaseCrashlytics */; };
+		A0669DBF2D794AB800E1D532 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = A0669DBE2D794AB800E1D532 /* GoogleSignIn */; };
+		A0669DC12D794AB800E1D532 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A0669DC02D794AB800E1D532 /* GoogleSignInSwift */; };
+		A0669DC42D794C2800E1D532 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = A0669DC32D794C2800E1D532 /* RealmSwift */; };
+		A0669DC72D794C4300E1D532 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = A0669DC62D794C4300E1D532 /* SnapKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		A0669D782D79474B00E1D532 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -65,6 +75,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0669DC42D794C2800E1D532 /* RealmSwift in Frameworks */,
+				A0669DC12D794AB800E1D532 /* GoogleSignInSwift in Frameworks */,
+				A0669DBC2D794A5D00E1D532 /* FirebaseCrashlytics in Frameworks */,
+				A0669DC72D794C4300E1D532 /* SnapKit in Frameworks */,
+				A0669DBF2D794AB800E1D532 /* GoogleSignIn in Frameworks */,
+				A0669DBA2D794A5D00E1D532 /* FirebaseCore in Frameworks */,
+				A0669DB82D794A5D00E1D532 /* FirebaseAuth in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +132,7 @@
 				A0669D5D2D79474A00E1D532 /* Sources */,
 				A0669D5E2D79474A00E1D532 /* Frameworks */,
 				A0669D5F2D79474A00E1D532 /* Resources */,
+				A0669DB52D7949D900E1D532 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -125,6 +143,13 @@
 			);
 			name = ExpensesTrackerApp;
 			packageProductDependencies = (
+				A0669DB72D794A5D00E1D532 /* FirebaseAuth */,
+				A0669DB92D794A5D00E1D532 /* FirebaseCore */,
+				A0669DBB2D794A5D00E1D532 /* FirebaseCrashlytics */,
+				A0669DBE2D794AB800E1D532 /* GoogleSignIn */,
+				A0669DC02D794AB800E1D532 /* GoogleSignInSwift */,
+				A0669DC32D794C2800E1D532 /* RealmSwift */,
+				A0669DC62D794C4300E1D532 /* SnapKit */,
 			);
 			productName = ExpensesTrackerApp;
 			productReference = A0669D612D79474A00E1D532 /* ExpensesTrackerApp.app */;
@@ -208,6 +233,12 @@
 			);
 			mainGroup = A0669D582D79474A00E1D532;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A0669DB62D794A5D00E1D532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A0669DBD2D794AB800E1D532 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				A0669DC22D794C2800E1D532 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				A0669DC52D794C4300E1D532 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A0669D622D79474A00E1D532 /* Products */;
 			projectDirPath = "";
@@ -243,6 +274,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A0669DB52D7949D900E1D532 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n\nif which swiftformat >/dev/null; then\n  swiftformat .\nelse\n  echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A0669D5D2D79474A00E1D532 /* Sources */ = {
@@ -294,15 +345,15 @@
 				INFOPLIST_FILE = ExpensesTrackerApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bhavya.expensestracker.ExpensesTrackerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bhavya.expensestracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -322,15 +373,15 @@
 				INFOPLIST_FILE = ExpensesTrackerApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.bhavya.expensestracker.ExpensesTrackerApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bhavya.expensestracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -569,6 +620,79 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A0669DB62D794A5D00E1D532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.9.0;
+			};
+		};
+		A0669DBD2D794AB800E1D532 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+		A0669DC22D794C2800E1D532 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.0.0;
+			};
+		};
+		A0669DC52D794C4300E1D532 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A0669DB72D794A5D00E1D532 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0669DB62D794A5D00E1D532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		A0669DB92D794A5D00E1D532 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0669DB62D794A5D00E1D532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		A0669DBB2D794A5D00E1D532 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0669DB62D794A5D00E1D532 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		A0669DBE2D794AB800E1D532 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0669DBD2D794AB800E1D532 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		A0669DC02D794AB800E1D532 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0669DBD2D794AB800E1D532 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		A0669DC32D794C2800E1D532 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0669DC22D794C2800E1D532 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+		A0669DC62D794C4300E1D532 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0669DC52D794C4300E1D532 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A0669D592D79474A00E1D532 /* Project object */;
 }
