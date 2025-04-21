@@ -25,17 +25,30 @@ class AddExpenseViewModel {
             expenseDescription.send(expense.expenseDescription)
         }
     }
+    
+    func validateAndSaveExpense() -> String? {
+            guard amount.value > 0 else { return "Invalid amount" }
+            guard !expenseDescription.value.isEmpty else { return "Description cannot be empty" }
+            
+            saveExpense()
+            return nil
+    }
 
     func saveExpense() {
-        if let existingExpense = expense {
-//            existingExpense.amount = amount.value
-//            existingExpense.expenseDescription = expenseDescription.value
+        if expense != nil {
             ExpenseManager.shared.updateExpense(expense!, newAmount: amount.value, newDescription: expenseDescription.value )
         } else {
             ExpenseManager.shared.createExpenses(amount: amount.value,description: expenseDescription.value)
         }
         
         onExpenseSaved?()
+    }
+    
+    func shouldAllowChange(currentText: String, range: NSRange, replacementString string: String) -> Bool {
+        if string == "." && currentText.contains(".") {
+            return false
+        }
+        return true
     }
 }
 

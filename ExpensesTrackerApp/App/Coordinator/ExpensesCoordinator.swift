@@ -6,19 +6,22 @@
 //
 
 import UIKit
-
+protocol ExpensesCoordinatorDelegate: AnyObject {
+    func didSignOut()
+}
 class ExpensesCoordinator {
     var navigationController: UINavigationController
-
+    var rootViewController: UIViewController!
+    weak var delegate: ExpensesCoordinatorDelegate?
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 
     func start() {
         let viewModel = ExpensesViewModel(coordinator: self)
-        let expensesViewController = ExpensesViewController(viewModel: viewModel)
+        rootViewController = ExpensesViewController(viewModel: viewModel)
         
-        navigationController.pushViewController(expensesViewController, animated: true)
+        navigationController.pushViewController(rootViewController, animated: true)
     }
     
      func showAddExpenseScreen() {
@@ -44,6 +47,10 @@ class ExpensesCoordinator {
         }
         
         navigationController.pushViewController(addExpenseVC, animated: true)
+    }
+    
+    func navigateToLoginScreen() {
+            delegate?.didSignOut()
     }
 }
 

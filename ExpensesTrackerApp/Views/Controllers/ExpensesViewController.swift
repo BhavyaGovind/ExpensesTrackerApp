@@ -32,7 +32,7 @@ class ExpensesViewController: UIViewController {
     }
     
     private func setupUI() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         setupNavigationBar()
         setupTableView()
         setupEmptyLabel()
@@ -46,6 +46,13 @@ class ExpensesViewController: UIViewController {
             target: self,
             action: #selector(addExpenseTapped)
         )
+        navigationItem.rightBarButtonItem?.accessibilityIdentifier = "addExpenseButton"
+        let logoutButton = UIBarButtonItem(image: UIImage(systemName: "power.circle.fill"),
+                                                   style: .plain,
+                                                   target: self,
+                                                   action: #selector(logoutTapped))
+        navigationItem.leftBarButtonItem = logoutButton
+        
     }
     
     private func setupTableView() {
@@ -76,7 +83,9 @@ class ExpensesViewController: UIViewController {
             }
             .store(in: &cancellables)
     }
-    
+    @objc private func logoutTapped() {
+            viewModel.logout()
+        }
     @objc private func addExpenseTapped() {
         viewModel.addExpenseTapped()
     }
@@ -100,51 +109,4 @@ extension ExpensesViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-class ExpenseCell: UITableViewCell {
-    private let containerView = UIView()
-    private let amountLabel = UILabel()
-    private let descriptionLabel = UILabel()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
-        selectionStyle = .none
-        backgroundColor = .clear
-        
-        containerView.backgroundColor = .secondarySystemBackground
-        containerView.layer.cornerRadius = 12
-        containerView.layer.shadowColor = UIColor.black.cgColor
-        containerView.layer.shadowOpacity = 0.1
-        containerView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        containerView.layer.shadowRadius = 4
-        
-        addSubview(containerView)
-        containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(10)
-        }
-        
-        amountLabel.font = .systemFont(ofSize: 18, weight: .bold)
-        descriptionLabel.font = .systemFont(ofSize: 14, weight: .medium)
-        descriptionLabel.textColor = .gray
-        
-        let stackView = UIStackView(arrangedSubviews: [amountLabel, descriptionLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        containerView.addSubview(stackView)
-        stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(12)
-        }
-    }
-    
-    func configure(with expense: Expense) {
-        amountLabel.text = "$\(expense.amount)"
-        descriptionLabel.text = expense.expenseDescription
-    }
-}
+

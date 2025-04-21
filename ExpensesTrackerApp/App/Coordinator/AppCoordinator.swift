@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-class AppCoordinator {
+class AppCoordinator: ExpensesCoordinatorDelegate{
     var window: UIWindow
     var navigationController: UINavigationController
     
@@ -18,8 +18,16 @@ class AppCoordinator {
     }
     
     func start() {
+        
+        if ProcessInfo.processInfo.environment["UITest"] == "1" {
+            print("Running in UITest mode: Skipping authentication")
+            navigateToExpensesTracker()
+            return
+        }
         // Check if user is logged in
         if let _ = Auth.auth().currentUser {
+            
+            print("Current user, \(Auth.auth().currentUser)")
             // User is logged in, navigate to Expenses List
             navigateToExpensesTracker()
         } else {
@@ -41,8 +49,15 @@ class AppCoordinator {
     func navigateToExpensesTracker() {
         let expensesCoordinator = ExpensesCoordinator(navigationController: navigationController)
         expensesCoordinator.start()
+        expensesCoordinator.delegate = self
         window.rootViewController = navigationController
+        navigationController.setViewControllers([expensesCoordinator.rootViewController], animated: true)
         window.makeKeyAndVisible()
+    }
+    
+    func didSignOut() {
+        navigationController.setViewControllers([], animated: false)
+        navigateToSignIn()
     }
     
     

@@ -12,7 +12,7 @@ import Combine
 class ExpenseManager {
     static let shared = ExpenseManager()
     private var realm: Realm
-    private var expensesSubject = PassthroughSubject<[Expense], Never>()
+    private var expensesSubject = CurrentValueSubject<[Expense], Never>([])
     
     
     var expensesPublisher: AnyPublisher<[Expense], Never> {
@@ -61,5 +61,42 @@ class ExpenseManager {
     private func notifyChanges() {
         let updatedExpenses = getExpenses()
         expensesSubject.send(updatedExpenses)
+    }
+    
+    func addMockExpensesForUITests() {
+            guard ProcessInfo.processInfo.environment["UITest"] == "1" else { return }
+        do{
+            try realm.write {
+                let expense1 = Expense()
+                expense1.id = UUID().uuidString // ✅ Realm objects need a primary key
+                expense1.amount = 100.0
+                expense1.expenseDescription = "Groceries"
+                realm.add(expense1)
+                
+                let expense2 = Expense()
+                expense2.id = UUID().uuidString
+                expense2.amount = 50.0
+                expense2.expenseDescription = "Transport"
+                realm.add(expense2)
+            }
+            let freshExpenses = Array(realm.objects(Expense.self))
+            expensesSubject.send(freshExpenses)
+        }
+        catch {
+            print("Error adding expenses,\(error.localizedDescription)")
+        }
+        
+            
+        }
+    func clearAllExpenses() {
+        do {
+            try realm.write {
+                let allExpenses = realm.objects(Expense.self)
+                realm.delete(allExpenses)
+            }
+        }
+        catch {
+            print ("Error deleting all expenses")
+        }
     }
 }

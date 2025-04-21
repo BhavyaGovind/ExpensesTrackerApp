@@ -55,12 +55,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = UIColor.white 
         
         let navigationController = UINavigationController()
-        
-
         window = UIWindow(frame: UIScreen.main.bounds)
-        
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        //Load or clear expenses for UITesting
+        if (ProcessInfo.processInfo.environment["UITest"] == "1") {
+            if(CommandLine.arguments.contains("--reset-data")) {
+                ExpenseManager.shared.clearAllExpenses()
+            }
+            if(CommandLine.arguments.contains("--seed-mock-expenses")) {
+                ExpenseManager.shared.addMockExpensesForUITests()
+            }
+        }
+        
         let coordinator = AppCoordinator(window: window!)
         coordinator.start()
         

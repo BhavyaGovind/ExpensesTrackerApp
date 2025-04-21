@@ -12,12 +12,13 @@ import Combine
 
 protocol AuthServiceProtocol {
     func signInWithGoogle(presenting viewController: UIViewController) -> Future<User, Error>
+    func signOut(completion: @escaping (Bool, String?) -> Void)
 }
 
 class AuthService: AuthServiceProtocol{
     static let shared = AuthService()
     private var cancellables = Set<AnyCancellable>()
-
+    
     // Publisher that emits User upon successful Google Sign-In
     func signInWithGoogle(presenting viewController: UIViewController) -> Future<User, Error> {
         return Future { promise in
@@ -26,24 +27,24 @@ class AuthService: AuthServiceProtocol{
                     promise(.failure(error))
                     return
                 }
-
+                
                 guard let signInResult = signInResult else {
                     promise(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "SignIn result is nil."])))
                     return
                 }
-
+                
                 // Get ID token and access token
                 let user = signInResult.user
                 guard let idToken = user.idToken?.tokenString else {
                     promise(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to get ID token."])))
                     return
                 }
-
+                
                 let accessToken = user.accessToken.tokenString
-
+                
                 // Create Firebase credentials
                 let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
-
+                
                 // Sign in to Firebase with Combine
                 self.signInWithFirebase(using: credential)
                     .sink(receiveCompletion: { completion in
@@ -57,7 +58,7 @@ class AuthService: AuthServiceProtocol{
             }
         }
     }
-
+    
     private func signInWithFirebase(using credential: AuthCredential) -> Future<User, Error> {
         return Future { promise in
             Auth.auth().signIn(with: credential) { authResult, error in
@@ -65,7 +66,7 @@ class AuthService: AuthServiceProtocol{
                     promise(.failure(error))
                     return
                 }
-
+                
                 guard let firebaseUser = authResult?.user else {
                     promise(.failure(NSError(domain: "AuthError", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to sign in with Firebase."])))
                     return
@@ -74,6 +75,15 @@ class AuthService: AuthServiceProtocol{
                 let user = User.from(firebaseUser: firebaseUser)
                 promise(.success(user))
             }
+        }
+    }
+    
+    func signOut(completion: @escaping (Bool, String?) -> Void) {
+        do {
+            try Auth.auth().signOut()
+            completion(true, nil)
+        } catch let signOutError as NSError {
+            completion(false, signOutError.localizedDescription)
         }
     }
 }
